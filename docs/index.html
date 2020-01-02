@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="module-wavefile-creator.WaveFileCreator.html">WaveFileCreator</a><ul class='methods'><li data-type='method'><a href="module-wavefile-creator.WaveFileCreator.html#fromBuffer">fromBuffer</a></li><li data-type='method'><a href="module-wavefile-creator.WaveFileCreator.html#fromScratch">fromScratch</a></li><li data-type='method'><a href="module-wavefile-creator.WaveFileCreator.html#toBuffer">toBuffer</a></li></ul></li></ul><h3>Modules</h3><ul><li><a href="module-wavefile-creator.html">wavefile-creator</a></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+    <section class="package">
+        <h3> </h3>		
+    </section>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    <section class="readme">
+        <article><h1>wavefile-creator</h1>
+<p>Copyright (c) 2019 Rafael da Silva Rocha.<br>
+https://github.com/rochars/wavefile-creator</p>
+<p><a href="https://www.npmjs.com/package/wavefile-creator"><img src="https://img.shields.io/npm/v/wavefile-creator.svg?style=for-the-badge" alt="NPM version"></a> <a href="https://rochars.github.io/wavefile-creator/docs"><img src="https://img.shields.io/badge/API-docs-blue.svg?style=for-the-badge" alt="Docs"></a><br>
+<a href="https://codecov.io/gh/rochars/wavefile-creator"><img src="https://img.shields.io/codecov/c/github/rochars/wavefile-creator.svg?style=flat-square" alt="Codecov"></a> <a href="https://travis-ci.org/rochars/wavefile-creator"><img src="https://img.shields.io/travis/rochars/wavefile-creator.svg?style=flat-square" alt="Unix Build"></a> <a href="https://ci.appveyor.com/project/rochars/wavefile-creator"><img src="https://img.shields.io/appveyor/ci/rochars/wavefile-creator.svg?style=flat-square&amp;logo=appveyor" alt="Windows Build"></a> <a href="https://scrutinizer-ci.com/g/rochars/wavefile-creator/"><img src="https://img.shields.io/scrutinizer/g/rochars/wavefile-creator.svg?style=flat-square&amp;logo=scrutinizer" alt="Scrutinizer"></a></p>
+<p>Create, read and write wav files.</p>
+<h2>Install</h2>
+<pre class="prettyprint source"><code>npm install wavefile-creator
+</code></pre>
+<h2>Use</h2>
+<h3>Node</h3>
+<pre class="prettyprint source lang-javascript"><code>const wavefileCreator = require('wavefile-creator');
+let wav = new wavefileCreator.WaveFileCreator();
+</code></pre>
+<p>or</p>
+<pre class="prettyprint source lang-javascript"><code>const WaveFileCreator = require('wavefile-creator').WaveFileCreator;
+let wav = new WaveFileCreator();
+</code></pre>
+<p>or</p>
+<pre class="prettyprint source lang-javascript"><code>import { WaveFileCreator } from 'wavefile-creator';
+let wav = new WaveFileCreator();
+</code></pre>
+<h4>Node.js Example</h4>
+<pre class="prettyprint source lang-javascript"><code>const WaveFileCreator = require('wavefile-creator').WaveFileCreator;
+
+// Load a wav file buffer as a WaveFileCreator object
+let wav = new WaveFileCreator();
+wav.fromBuffer(buffer);
+
+// Check some of the file properties
+console.log(wav.container);
+console.log(wav.chunkSize);
+console.log(wav.fmt.chunkId);
+
+// toBuffer() return a wav file buffer
+// ready to be written to disk...
+let theFile = wav.toBuffer();
+
+// ...or to be loaded by another WaveFileCreator object
+let wav2 = new WaveFileCreator(theFile);
+</code></pre>
+<h3>Browser</h3>
+<p>Use the <strong>wavefile-creator.js</strong> file in the <em>dist</em> folder:</p>
+<pre class="prettyprint source lang-html"><code>&lt;script src=&quot;wavefile-creator.js&quot;>&lt;/script>
+&lt;script>
+  var wav = new wavefileCreator.WaveFileCreator();
+&lt;/script>
+</code></pre>
+<p>Or load it from the <a href="https://cdn.jsdelivr.net/npm/wavefile-creator">jsDelivr</a> CDN:</p>
+<pre class="prettyprint source lang-html"><code>&lt;script src=&quot;https://cdn.jsdelivr.net/npm/wavefile-creator&quot;>&lt;/script>
+</code></pre>
+<p>Or load it from <a href="https://unpkg.com/wavefile-creator">unpkg</a>:</p>
+<pre class="prettyprint source lang-html"><code>&lt;script src=&quot;https://unpkg.com/wavefile-creator&quot;>&lt;/script>
+</code></pre>
+<h3>Create wave files from scratch</h3>
+<p>Use the <code>fromScratch(numChannels, sampleRate, bitDepth, samples)</code> method.</p>
+<h4>Mono:</h4>
+<pre class="prettyprint source lang-javascript"><code>let wav = new WaveFile();
+
+// Create a mono wave file, 44.1 kHz, 32-bit and 4 samples
+wav.fromScratch(1, 44100, '32', [0, -2147483, 2147483, 4]);
+fs.writeFileSync(path, wav.toBuffer());
+</code></pre>
+<h4>Stereo:</h4>
+<p>Samples can be informed interleaved or de-interleaved. If they are de-interleaved, WaveFile will interleave them. In this example they are de-interleaved.</p>
+<pre class="prettyprint source lang-javascript"><code>// Stereo, 48 kHz, 8-bit, de-interleaved samples
+// WaveFile interleave the samples automatically
+wav.fromScratch(2, 48000, '8', [
+    [0, 2, 4, 3],
+    [0, 1, 4, 3]
+]);
+fs.writeFileSync(path, wav.toBuffer());
+</code></pre>
+<p>Possible values for the bit depth are:<br>
+&quot;4&quot; - 4-bit IMA-ADPCM<br>
+&quot;8&quot; - 8-bit<br>
+&quot;8a&quot; - 8-bit A-Law<br>
+&quot;8m&quot; - 8-bit mu-Law<br>
+&quot;16&quot; - 16-bit<br>
+&quot;24&quot; - 24-bit<br>
+&quot;32&quot; - 32-bit<br>
+&quot;32f&quot; - 32-bit floating point<br>
+&quot;64&quot; - 64-bit floating point</p>
+<h2>API</h2>
+<h3>The WaveFileCreator methods</h3>
+<pre class="prettyprint source lang-javascript"><code>/**
+ * Set up the WaveFileCreator object from a byte buffer.
+ * @param {!Uint8Array} bytes The buffer.
+ * @param {boolean=} loadSamples True if the samples should be loaded.
+ * @throws {Error} If container is not RIFF, RIFX or RF64.
+ * @throws {Error} If no fmt  chunk is found.
+ * @throws {Error} If no data chunk is found.
+ */
+WaveFileCreator.fromBuffer(bytes, loadSamples=true) {}
+
+/**
+ * Return a byte buffer representig the WaveFileCreator object as a .wav file.
+ * The return value of this method can be written straight to disk.
+ * @return {!Uint8Array} A wav file.
+ */
+WaveFileCreator.toBuffer() {}
+
+/**
+ * Set up the WaveFileCreator object based on the arguments passed.
+ * Existing chunks are reset.
+ * @param {number} numChannels The number of channels
+ *    (Integer numbers: 1 for mono, 2 stereo and so on).
+ * @param {number} sampleRate The sample rate.
+ *    Integer numbers like 8000, 44100, 48000, 96000, 192000.
+ * @param {string} bitDepthCode The audio bit depth code.
+ *    One of '4', '8', '8a', '8m', '16', '24', '32', '32f', '64'
+ *    or any value between '8' and '32' (like '12').
+ * @param {!Array&lt;number>|!Array&lt;!Array&lt;number>>|!TypedArray} samples
+ *    The samples. Must be in the correct range according to the bit depth.
+ * @param {?Object} options Optional. Used to force the container
+ *    as RIFX with {'container': 'RIFX'}
+ * @throws {Error} If any argument does not meet the criteria.
+ */
+fromScratch(numChannels, sampleRate, bitDepthCode, samples, options={}) {}
+</code></pre>
+<h3>The WaveFileCreator properties</h3>
+<pre class="prettyprint source lang-javascript"><code>/**
+ * The container identifier.
+ * &quot;RIFF&quot;, &quot;RIFX&quot; and &quot;RF64&quot; are supported.
+ * @type {string}
+ */
+WaveFileCreator.container = '';
+/**
+ * @type {number}
+ */
+WaveFileCreator.chunkSize = 0;
+/**
+ * The format.
+ * Always 'WAVE'.
+ * @type {string}
+ */
+WaveFileCreator.format = '';
+/**
+ * The data of the &quot;fmt&quot; chunk.
+ * @type {!Object&lt;string, *>}
+ */
+WaveFileCreator.fmt = {
+    /** @type {string} */
+    chunkId: '',
+    /** @type {number} */
+    chunkSize: 0,
+    /** @type {number} */
+    audioFormat: 0,
+    /** @type {number} */
+    numChannels: 0,
+    /** @type {number} */
+    sampleRate: 0,
+    /** @type {number} */
+    byteRate: 0,
+    /** @type {number} */
+    blockAlign: 0,
+    /** @type {number} */
+    bitsPerSample: 0,
+    /** @type {number} */
+    cbSize: 0,
+    /** @type {number} */
+    validBitsPerSample: 0,
+    /** @type {number} */
+    dwChannelMask: 0,
+    /**
+     * 4 32-bit values representing a 128-bit ID
+     * @type {!Array&lt;number>}
+     */
+    subformat: []
+};
+/**
+ * The data of the &quot;fact&quot; chunk.
+ * @type {!Object&lt;string, *>}
+ */
+WaveFileCreator.fact = {
+    /** @type {string} */
+    chunkId: '',
+    /** @type {number} */
+    chunkSize: 0,
+    /** @type {number} */
+    dwSampleLength: 0
+};
+/**
+ * The data of the &quot;cue &quot; chunk.
+ * @type {!Object&lt;string, *>}
+ */
+WaveFileCreator.cue = {
+    /** @type {string} */
+    chunkId: '',
+    /** @type {number} */
+    chunkSize: 0,
+    /** @type {number} */
+    dwCuePoints: 0,
+    /** @type {!Array&lt;!Object>} */
+    points: [],
+};
+/**
+ * The data of the &quot;smpl&quot; chunk.
+ * @type {!Object&lt;string, *>}
+ */
+WaveFileCreator.smpl = {
+    /** @type {string} */
+    chunkId: '',
+    /** @type {number} */
+    chunkSize: 0,
+    /** @type {number} */
+    dwManufacturer: 0,
+    /** @type {number} */
+    dwProduct: 0,
+    /** @type {number} */
+    dwSamplePeriod: 0,
+    /** @type {number} */
+    dwMIDIUnityNote: 0,
+    /** @type {number} */
+    dwMIDIPitchFraction: 0,
+    /** @type {number} */
+    dwSMPTEFormat: 0,
+    /** @type {number} */
+    dwSMPTEOffset: 0,
+    /** @type {number} */
+    dwNumSampleLoops: 0,
+    /** @type {number} */
+    dwSamplerData: 0,
+    /** @type {!Array&lt;!Object>} */
+    loops: [],
+};
+/**
+ * The data of the &quot;bext&quot; chunk.
+ * @type {!Object&lt;string, *>}
+ */
+WaveFileCreator.bext = {
+    /** @type {string} */
+    chunkId: '',
+    /** @type {number} */
+    chunkSize: 0,
+    /** @type {string} */
+    description: '', //256
+    /** @type {string} */
+    originator: '', //32
+    /** @type {string} */
+    originatorReference: '', //32
+    /** @type {string} */
+    originationDate: '', //10
+    /** @type {string} */
+    originationTime: '', //8
+    /**
+     * 2 32-bit values, timeReference high and low
+     * @type {!Array&lt;number>}
+     */
+    timeReference: [0, 0],
+    /** @type {number} */
+    version: 0, //WORD
+    /** @type {string} */
+    UMID: '', // 64 chars
+    /** @type {number} */
+    loudnessValue: 0, //WORD
+    /** @type {number} */
+    loudnessRange: 0, //WORD
+    /** @type {number} */
+    maxTruePeakLevel: 0, //WORD
+    /** @type {number} */
+    maxMomentaryLoudness: 0, //WORD
+    /** @type {number} */
+    maxShortTermLoudness: 0, //WORD
+    /** @type {string} */
+    reserved: '', //180
+    /** @type {string} */
+    codingHistory: '' // string, unlimited
+};
+/**
+ * The data of the &quot;ds64&quot; chunk.
+ * Used only with RF64 files.
+ * @type {!Object&lt;string, *>}
+ */
+WaveFileCreator.ds64 = {
+    /** @type {string} */
+    chunkId: '',
+    /** @type {number} */
+    chunkSize: 0,
+    /** @type {number} */
+    riffSizeHigh: 0, // DWORD
+    /** @type {number} */
+    riffSizeLow: 0, // DWORD
+    /** @type {number} */
+    dataSizeHigh: 0, // DWORD
+    /** @type {number} */
+    dataSizeLow: 0, // DWORD
+    /** @type {number} */
+    originationTime: 0, // DWORD
+    /** @type {number} */
+    sampleCountHigh: 0, // DWORD
+    /** @type {number} */
+    sampleCountLow: 0, // DWORD
+    /** @type {number} */
+    //&quot;tableLength&quot;: 0, // DWORD
+    /** @type {!Array&lt;number>} */
+    //&quot;table&quot;: []
+};
+/**
+ * The data of the &quot;data&quot; chunk.
+ * @type {!Object&lt;string, *>}
+ */
+WaveFileCreator.data = {
+    /** @type {string} */
+    chunkId: '',
+    /** @type {number} */
+    chunkSize: 0,
+    /** @type {!Uint8Array} */
+    samples: new Uint8Array(0)
+};
+/**
+ * The data of the &quot;LIST&quot; chunks.
+ * Each item in this list look like this:
+ *  {
+ *      chunkId: '',
+ *      chunkSize: 0,
+ *      format: '',
+ *      subChunks: []
+ *   }
+ * @type {!Array&lt;!Object>}
+ */
+WaveFileCreator.LIST = [];
+/**
+ * The data of the &quot;junk&quot; chunk.
+ * @type {!Object&lt;string, *>}
+ */
+WaveFileCreator.junk = {
+    /** @type {string} */
+    chunkId: '',
+    /** @type {number} */
+    chunkSize: 0,
+    /** @type {!Array&lt;number>} */
+    chunkData: []
+};
+/**
+ * The bit depth code according to the samples.
+ * @type {string}
+ */
+WaveFileCreator.bitDepth =  '';
+</code></pre>
+<h4>Cue points</h4>
+<p>Items in <em>cue.points</em> are objects like this:</p>
+<pre class="prettyprint source lang-javascript"><code>{
+    /** @type {number} */
+    dwName: 0, // a cue point ID
+    /** @type {number} */
+    dwPosition: 0,
+    /** @type {number} */
+    fccChunk: 0,
+    /** @type {number} */
+    dwChunkStart: 0,
+    /** @type {number} */
+    dwBlockStart: 0,
+    /** @type {number} */
+    dwSampleOffset: 0
+}
+</code></pre>
+<h4>Sample loops</h4>
+<p>Items in <em>smpl.loops</em> are objects like this:</p>
+<pre class="prettyprint source lang-javascript"><code>{
+    /** @type {string} */
+    dwName: '', // a cue point ID
+    /** @type {number} */
+    dwType: 0,
+    /** @type {number} */
+    dwStart: 0,
+    /** @type {number} */
+    dwEnd: 0,
+    /** @type {number} */
+    dwFraction: 0,
+    /** @type {number} */
+    dwPlayCount: 0
+}
+</code></pre>
+<h4>LIST chunk</h4>
+<p>&quot;LIST&quot; chunk data is stored as follows:</p>
+<pre class="prettyprint source lang-javascript"><code>/**
+ * An array of the &quot;LIST&quot; chunks present in the file.
+ * @type {!Array&lt;!Object>}
+ */
+WaveFileCreator.LIST = [];
+</code></pre>
+<p>Items in <em>WaveFileCreator.LIST</em> are objects like this:</p>
+<pre class="prettyprint source lang-javascript"><code>{
+    /** @type {string} */
+    chunkId: '', // always 'LIST'
+    /** @type {number} */
+    chunkSize: 0,
+    /** @type {string} */
+    format: '', // 'adtl' or 'INFO'
+    /** @type {!Array&lt;!Object>} */
+    subChunks: []
+};
+</code></pre>
+<p>Where &quot;subChunks&quot; are the subChunks of the &quot;LIST&quot; chunk. A single file may have many &quot;LIST&quot; chunks as long as their formats (&quot;INFO&quot;, &quot;adtl&quot;, etc) are not the same. <strong>wavefile-creator</strong> can read &quot;LIST&quot; chunks of format &quot;INFO&quot; and &quot;adtl&quot;.</p>
+<p>For &quot;LIST&quot; chunks with the &quot;INFO&quot; format, &quot;subChunks&quot; will be an array of objects like this:</p>
+<pre class="prettyprint source lang-javascript"><code>{
+    /** @type {string} */
+    chunkId: '', // some RIFF tag
+    /** @type {number} */
+    chunkSize 0,
+    /** @type {string} */
+    value: ''
+}
+</code></pre>
+<p>Where &quot;chunkId&quot; may be any RIFF tag:<br>
+https://sno.phy.queensu.ca/~phil/exiftool/TagNames/RIFF.html#Info</p>
+<h2>Contributing to wavefile-creator</h2>
+<p><strong>wavefile-creator</strong> welcomes all contributions from anyone willing to work in good faith with other contributors and the community. No contribution is too small and all contributions are valued.</p>
+<p>See <a href="https://github.com/rochars/wavefile-creator/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a> for details.</p>
+<h3>Style guide</h3>
+<p><strong>wavefile-creator</strong> code should follow the Google JavaScript Style Guide:<br>
+https://google.github.io/styleguide/jsguide.html</p>
+<h3>Code of conduct</h3>
+<p>This project is bound by a Code of Conduct: The <a href="https://github.com/rochars/wavefile-creator/blob/master/CODE_OF_CONDUCT.md">Contributor Covenant, version 1.4</a>, also available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html</p>
+<h2>References</h2>
+<h3>Papers</h3>
+<p>https://tech.ebu.ch/docs/tech/tech3285.pdf<br>
+https://tech.ebu.ch/docs/tech/tech3306-2009.pdf<br>
+http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html<br>
+https://www.loc.gov/preservation/digital/formats/fdd/fdd000356.shtml<br>
+http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/Docs/riffmci.pdf<br>
+https://sites.google.com/site/musicgapi/technical-documents/wav-file-format<br>
+http://www.neurophys.wisc.edu/auditory/riff-format.txt<br>
+https://sno.phy.queensu.ca/~phil/exiftool/TagNames/RIFF.html#Info</p>
+<h3>Software</h3>
+<p>https://github.com/erikd/libsndfile<br>
+https://gist.github.com/hackNightly/3776503<br>
+https://github.com/chirlu/sox/blob/master/src/wav.c</p>
+<h3>Other</h3>
+<p>https://developercertificate.org/<br>
+https://www.contributor-covenant.org/version/1/4/code-of-conduct.html<br>
+https://google.github.io/styleguide/jsguide.html</p>
+<h3>LICENSE</h3>
+<p>Copyright (c) 2019 Rafael da Silva Rocha.</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+&quot;Software&quot;), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p></article>
+    </section>
+
+
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        index.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="https://github.com/rochars/wavefile">https://github.com/rochars/wavefile</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+            
+                <div class="description">The WaveFileCreator class.</div>
+            
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
