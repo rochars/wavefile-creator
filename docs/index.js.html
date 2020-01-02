@@ -73,7 +73,7 @@
  */
 
 import { WaveFileParser } from 'wavefile-parser';
-import { packArrayTo, packTo, unpack } from 'byte-data';
+import { packArrayTo } from 'byte-data';
 
 /** @module wavefile-creator */
 
@@ -134,7 +134,7 @@ export class WaveFileCreator extends WaveFileParser {
     };
     // Now load the file
     if (wavBuffer) {
-      this.fromBuffer(wavBuffer, samples=true);
+      this.fromBuffer(wavBuffer, samples);
     }
   }
 
